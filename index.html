@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¡Pool Party Serena & Máximo!</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Confeti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root{
+      --rosa:#ff7eb3;
+      --naranja:#ffbc67;
+      --azul:#276899;
+      --morado:#7c3aed;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{
+      background:linear-gradient(135deg,var(--rosa),var(--naranja));
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      color:#fff;
+    }
+    .card{
+      width:100%;
+      max-width:420px;
+      background:#fff;
+      border-radius:40px;
+      overflow:hidden;
+      box-shadow:0 20px 40px rgba(0,0,0,.15);
+      animation:zoomIn .8s ease;
+      position:relative;
+    }
+    @keyframes zoomIn{
+      from{opacity:0;transform:translateY(30px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+    /* Hero */
+    .hero{
+      height:320px;
+      background:url('alberca4.jpg') center/cover no-repeat;
+      position:relative;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding-bottom:30px;
+    }
+    .hero::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to top,rgba(0,0,0,.6) 0%,transparent 60%);
+    }
+    .hero h1{
+      position:relative;
+      color:#fff;
+      font-size:34px;
+      font-weight:700;
+      text-shadow:0 3px 8px rgba(0,0,0,.8);
+      animation:slideUp 1s ease;
+    }
+    @keyframes slideUp{
+      from{transform:translateY(30px);opacity:0;}
+      to{transform:translateY(0);opacity:1;}
+    }
+    /* Contenido */
+    .content{padding:30px 25px 40px;}
+    .info-item{
+      display:flex;
+      align-items:center;
+      margin-bottom:12px;
+      font-size:17px;
+      color:#333;
+    }
+    .info-item i{
+      color:var(--azul);
+      margin-right:12px;
+      width:20px;
+      text-align:center;
+    }
+    /* Galería carrusel */
+    .gallery{
+      position:relative;
+      height:220px;
+      border-radius:25px;
+      overflow:hidden;
+      margin:25px 0;
+      box-shadow:0 8px 20px rgba(0,0,0,.15);
+    }
+    .gallery img{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0;
+      transition:opacity .8s;
+    }
+    .gallery img.active{opacity:1;}
+    .gallery button{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      background:rgba(255,255,255,.7);
+      border:none;
+      font-size:22px;
+      padding:10px;
+      border-radius:50%;
+      cursor:pointer;
+      transition:.3s;
+    }
+    .gallery button:hover{background:#fff;}
+    .gallery .prev{left:12px;}
+    .gallery .next{right:12px;}
+    /* Botón */
+    .btn{
+      width:100%;
+      background:linear-gradient(135deg,var(--rosa),var(--naranja));
+      border:none;
+      color:#fff;
+      font-size:19px;
+      font-weight:700;
+      padding:18px 0;
+      border-radius:50px;
+      cursor:pointer;
+      transition:.3s;
+      box-shadow:0 8px 20px rgba(0,0,0,.15);
+    }
+    .btn:hover{transform:translateY(-3px);}
+    .counter{
+      text-align:center;
+      margin-bottom:15px;
+      font-size:18px;
+      font-weight:600;
+      color:var(--morado);
+    }
+    .hidden{display:none;}
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- Hero -->
+    <div class="hero">
+      <h1>Serena & Máximo</h1>
+    </div>
+
+    <!-- Contenido -->
+    <div class="content">
+      <!-- Datos -->
+      <div class="info-item"><i class="fas fa-calendar-day"></i><span>Domingo 31 de agosto</span></div>
+      <div class="info-item"><i class="fas fa-clock"></i><span>9:30 a.m.</span></div>
+      <div class="info-item"><i class="fas fa-map-marker-alt"></i><span>Finca El Galope, Cocotitlán, Edo. Méx.</span></div>
+      <div class="info-item"><i class="fas fa-swimming-pool"></i><span>Lleva ropa de alberca y ¡muchas ganas de divertirte!</span></div>
+
+      <!-- Galería -->
+      <div class="gallery">
+        <img src="alberca1.jpg" class="active">
+        <img src="alberca2.jpeg">
+        <img src="alberca3.jpg">
+        <img src="alberca4.jpg">
+        <img src="ALBERCA5.jpg">
+        <img src="ALBERCA6.jpg">
+        <button class="prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+      </div>
+
+      <!-- Confirmar -->
+      <p class="counter" id="counter">Asistentes confirmados: 0</p>
+      <button id="confirmBtn" class="btn">Confirmar mi asistencia</button>
+      <p id="thanks" class="hidden">¡Confirmado! Nos vemos en la alberca 🎉</p>
+    </div>
+  </div>
+
+  <script>
+    // Galería
+    let idx=0;
+    const imgs=document.querySelectorAll('.gallery img');
+    function changeSlide(dir){
+      imgs[idx].classList.remove('active');
+      idx=(idx+dir+imgs.length)%imgs.length;
+      imgs[idx].classList.add('active');
+    }
+    setInterval(()=>changeSlide(1),4000);
+
+    // Confirmar
+    let c=0;
+    document.getElementById('confirmBtn').addEventListener('click',()=>{
+      c++;
+      document.getElementById('counter').textContent=`Asistentes confirmados: ${c}`;
+      document.getElementById('confirmBtn').style.display='none';
+      document.getElementById('thanks').classList.remove('hidden');
+      confetti({particleCount:200,spread:100,origin:{y:.6}});
+    });
+  </script>
+
+</body>
+</html>
